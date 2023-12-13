@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'db_helper.dart';
-
+import 'next.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -17,8 +17,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _emailController = TextEditingController();
   final _addressController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -33,7 +31,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 size: 100, // Change this to your preferred size
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             TextFormField(
               controller: _usernameController,
               decoration: InputDecoration(
@@ -49,7 +49,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             TextFormField(
               controller: _passwordController,
               decoration: InputDecoration(
@@ -66,7 +68,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             TextFormField(
               controller: _phoneController,
               decoration: InputDecoration(
@@ -82,7 +86,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             TextFormField(
               controller: _emailController,
               decoration: InputDecoration(
@@ -98,7 +104,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             TextFormField(
               controller: _addressController,
               decoration: InputDecoration(
@@ -114,7 +122,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return null;
               },
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -135,14 +145,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     await dbHelper.saveUser(user);
 
                     // Show a success message
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('User data saved')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('User data saved')));
                     await dbHelper.test_read('user.db');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainScreen()),
+                    );
                   }
                 },
                 child: const Text('Submit'),
               ),
             ),
-
           ],
         ),
       ),

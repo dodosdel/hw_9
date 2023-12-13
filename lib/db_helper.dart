@@ -21,7 +21,8 @@ class DBHelper {
   }
 
   _onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE user (id INTEGER PRIMARY KEY, username TEXT, password TEXT, phone TEXT, email TEXT, address TEXT)');
+    await db.execute(
+        'CREATE TABLE user (id INTEGER PRIMARY KEY, username TEXT, password TEXT, phone TEXT, email TEXT, address TEXT)');
   }
 
   Future<int> saveUser(User user) async {
@@ -43,6 +44,18 @@ class DBHelper {
     print(list);
   }
 
+  Future<List<User>> getUsers() async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query('user',
+        columns: ['id', 'username', 'password', 'phone', 'email', 'address']);
+    List<User> users = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        users.add(User.fromMap(maps[i].cast<String, dynamic>()));
+      }
+    }
+    return users;
+  }
 }
 
 class User {
@@ -53,7 +66,8 @@ class User {
   String email;
   String address;
 
-  User(this.id, this.username, this.password, this.phone, this.email, this.address);
+  User(this.id, this.username, this.password, this.phone, this.email,
+      this.address);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -65,5 +79,16 @@ class User {
       'address': address
     };
     return map;
+  }
+
+  static User fromMap(Map<String, dynamic> map) {
+    return User(
+      map['id'],
+      map['username'],
+      map['password'],
+      map['phone'],
+      map['email'],
+      map['address'],
+    );
   }
 }
